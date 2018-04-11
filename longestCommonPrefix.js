@@ -4,8 +4,6 @@ const longestCommonPrefix = function(strs) {
     let longestLength = 0;
     let longestPrefix = "";
 
-    console.log(strs);
-
     if (strs.length === 0) {
         return "";
     }
