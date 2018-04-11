@@ -12,5 +12,28 @@ Return
 ]
 */
 function generate(numRows) {
-
+  const store = {
+        0: [1],
+        1: [1, 1]
+    };
+    let result = [];
+    let i = 0;
+    while(i < numRows) {
+        if (store[i]) {
+            result.push(store[i]);
+        } else {
+            let temp = [];
+            for(let j=0; j <= i; j++) {
+                if(j === 0 || j === i) {
+                    temp.push(1);
+                } else {
+                    temp.push(store[i-1][j-1] + store[i-1][j]);
+                }
+            }
+            store[i] = temp;
+            result.push(temp);
+        }
+        i++;
+    }
+    return result;
 }
