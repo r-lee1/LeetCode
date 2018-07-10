@@ -6,28 +6,26 @@
 # Output: 1->1->2->3->4->4
 
 def merge_two_lists(l1, l2)
-  pointer1 = l1
-  pointer2 = l2
   l3 = ListNode.new(0)
   currentNode = l3
 
   loop do
-    if pointer1.nil?
-      currentNode.next = pointer2
+    if l1.nil?
+      currentNode.next = l2
       return l3.next
-    elsif pointer2.nil?
-      currentNode.next = pointer1
+    elsif l2.nil?
+      currentNode.next = l1
       return l3.next
     end
 
-    if pointer1.val <= pointer2.val
-      currentNode.next = pointer1
-      currentNode = pointer1
-      pointer1 = pointer1.next
+    if l1.val <= l2.val
+      currentNode.next = l1
+      currentNode = l1
+      l1 = l1.next
     else
-      currentNode.next = pointer2
-      currentNode = pointer2
-      pointer2 = pointer2.next
+      currentNode.next = l2
+      currentNode = l2
+      l2 = l2.next
     end
   end
 
