@@ -87,8 +87,9 @@ function maximumProduct(nums) {
   //If the product of the second and third largest integer is greater, then return the product
   //of that and the largest integer.
 
-  if (lowestNegInt * secondLowestNegInt > secondLargestInt * thirdLargestInt) {
-    return largestInt * lowestNegInt * secondLowestNegInt;
+  if (lowestNegInt && secondLowestNegInt) {
+    return Math.max((largestInt * lowestNegInt * secondLowestNegInt),
+    (largestInt * secondLargestInt * thirdLargestInt));
   } else {
     return largestInt * secondLargestInt * thirdLargestInt;
   }
