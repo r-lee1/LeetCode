@@ -3,6 +3,7 @@
  * @param {number} target
  * @return {number}
  */
+//[1,3], 2
 var search = function(nums, target) {
 
     let floorIndex = -1;
