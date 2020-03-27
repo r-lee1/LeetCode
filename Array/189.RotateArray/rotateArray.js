@@ -16,7 +16,7 @@ var rotate = function(nums, k) {
       let rotateToIndex = i + k;
 
       if (rotateToIndex >= nums.length) {
-          rotateToIndex = rotateToIndex - nums.length;
+          rotateToIndex = rotateToIndex % nums.length;
       }
 
       rotatedArray[rotateToIndex] = nums[i];
