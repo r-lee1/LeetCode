@@ -4,6 +4,7 @@
  * @return {void} Do not return anything, modify nums in-place instead.
  */
 
+//Using extra array
 var rotate = function(nums, k) {
 
     if (nums.length < 2) {
@@ -22,5 +23,8 @@ var rotate = function(nums, k) {
       rotatedArray[rotateToIndex] = nums[i];
     }
 
-    return rotatedArray;
+    for(let i = 0; i < nums.length; i++) {
+        nums[i] = rotatedArray[i];
+    }
+
 };
