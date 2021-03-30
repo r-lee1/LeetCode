@@ -12,23 +12,50 @@
  */
 // Iterative
 
+
 const postorderTraversal = (root) => {
     const res = [];
-    const stack = [];
+    const s = [];
+    let node = root;
+    let lastVisitedNode = null;
 
-    if (root === null) return res;
-    stack.push(root);
-
-    while(stack.length) {
-        let curr = stack.pop();
-        res.unshift(curr.val);
-        if (curr.left) stack.push(curr.left);
-        if (curr.right) stack.push(curr.right);
+    while (s.length || node !== null) {
+        if (node !== null) {
+            s.push(node);
+            node = node.left;
+        } else {
+            let peekNode = s[s.length - 1];
+            // if right child exists and am traversing node
+            // from left child, then move right
+            if (peekNode.right && lastVisitedNode !== peekNode.right) {
+                node = peekNode.right;
+            } else {
+                res.push(peekNode.val);
+                lastVisitedNode = s.pop();
+            }
+        }
     }
 
     return res;
+
 };
 
+// const postorderTraversal = (root) => {
+//     const res = [];
+//     const stack = [];
+//
+//     if (root === null) return res;
+//     stack.push(root);
+//
+//     while(stack.length) {
+//         let curr = stack.pop();
+//         res.unshift(curr.val);
+//         if (curr.left) stack.push(curr.left);
+//         if (curr.right) stack.push(curr.right);
+//     }
+//
+//     return res;
+// };
 
 
 // // Recursive
