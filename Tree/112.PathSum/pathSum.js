@@ -16,15 +16,29 @@ var hasPathSum = function(root, targetSum) {
 
     let valid = false;
     const getSum = (node, sum) => {
+        sum += node.val;
+        // if node is a leaf node and the targetSum is reached, then there is a valid path
         if (node.left === null && node.right === null && sum === targetSum) valid = true;
 
-        if (node.left) getSum(node.left, sum + node.left.val);
-        if (node.right) getSum(node.right, sum + node.right.val);
+        // traverse down the left and right children, passing current sum
+        if (node.left) getSum(node.left, sum);
+        if (node.right) getSum(node.right, sum);
     };
 
-    getSum(root, root.val);
+    getSum(root, 0);
     return valid;
 };
+
+// var hasPathSum = function(root, targetSum) {
+//     if (root === null) return false;
+
+//     targetSum -= root.val;
+//     if (root.left === null && root.right === null) {
+//         return (targetSum === 0);
+//     }
+
+//     return hasPathSum(root.left, targetSum) || hasPathSum(root.right, targetSum);
+// };
 
 /*
 Time: O(N)
