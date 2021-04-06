@@ -41,6 +41,52 @@ const lowestCommonAncestor = (root, p, q) => {
 };
 
 /*
+Time: O(N)
+Space: O(N)
+*/
+
+// Iterative Solution using Parent Pointers
+
+// const lowestCommonAncestor = (root, p, q) => {
+//     if (root === null) return null;
+//     const parent = {}; // Keep parent pointers to backtrack up the ancestor chain
+//     const stack = []; // Stack for DFS traversal of the tree;
+//     parent[root.val] = null; // Root node does not have a parent, set this to know when to                            // stop when backtracking the ancestor chain
+//     stack.push(root);
+
+//     // Keep traversing the tree, keeping track of each node's parent, until p and q are found
+//     while (!parent.hasOwnProperty(p.val) || !parent.hasOwnProperty(q.val)) {
+//         let node = stack.pop();
+//         if (node.left) {
+//             parent[node.left.val] = node;
+//             stack.push(node.left);
+//         }
+//         if (node.right) {
+//             parent[node.right.val] = node;
+//             stack.push(node.right);
+//         }
+//     }
+
+//     const ancestorsP = new Set(); // Travel up p's branch, keep a set of the ancestors of p
+//     while (p !== null) {
+//         ancestorsP.add(p);
+//         p = parent[p.val];
+//     }
+
+//     // Look for the first node in q's branch that is also an ancestor of p. This is the LCA.
+//     while (!ancestorsP.has(q)) {
+//         q = parent[q.val];
+//     }
+
+//     return q;
+// };
+
+/*
+Time: O(N)
+Space: O(N)
+*/
+
+/*
 Attempt #1
 FATAL ERROR: CALL_AND_RETRY_LAST Allocation failed - JavaScript heap out of memory
 29/31 test cases passed
