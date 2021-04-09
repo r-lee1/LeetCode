@@ -3,32 +3,39 @@
  * @return {void} Do not return anything, modify arr in-place instead.
  */
 
-const duplicateZeros = (arr) => {
-    let possibleDups = 0;
-    let length = arr.length - 1;
+ const duplicateZeros = (arr) => {
+     let spaceToCreate = 0; // How many zeros to duplicate, how many elements to remove from the end
+     let endOfCopy = arr.length - 1; // Everytime we have to create more space for a duplicate 0, we copy one less element to make space
 
-    for (let i = 0; i <= length - possibleDups; i++) {
-        if (arr[i] === 0) {
-            if (i === length - possibleDups) {
-                arr[length] = 0;
-                length--;
-                break;
-            }
-            possibleDups++;
-        }
-    }
+     // Loop through the array until the end of the elements that need to be copied
+     // to find how many zeros need to be duplicated, which helps us figure out how much extra space we need
+     for (let i = 0; i <= endOfCopy; i++) {
+         if (arr[i] === 0) {
+             // If the zero is at the end of elements to copy then we know we copy it like a normal element without a duplicate 0
+             // because there is not enough space for the duplicate
+             if (i === endOfCopy) {
+                 arr[arr.length-1] = 0;
+                 endOfCopy--;
+                 break;
+             }
+             spaceToCreate++;
+             endOfCopy--;
+         }
+     }
 
-    let copyEnd = length - possibleDups;
-    for (let j = copyEnd; j >= 0; j--) {
-        if (arr[j] === 0) {
-            arr[j + possibleDups] = 0;
-            possibleDups--;
-            arr[j + possibleDups] = 0;
-        } else {
-            arr[j + possibleDups] = arr[j];
-        }
-    }
-};
+     // Copy from the end of elements to copy to the beginning
+     // We will copy the elements to the original array, starting from the end of the extra space created
+     // if the element is 0 then copy it twice
+     for (let j = endOfCopy; j >= 0; j--) {
+         if (arr[j] === 0) {
+             arr[j+spaceToCreate] = arr[j];
+             spaceToCreate--;
+             arr[j+spaceToCreate] = arr[j];
+         } else {
+             arr[j+spaceToCreate] = arr[j];
+         }
+     }
+ };
 
 
 // var duplicateZeros = function(arr) {
