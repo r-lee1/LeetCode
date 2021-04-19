@@ -67,7 +67,10 @@ const reverseKGroup = (head, k) => {
     return newHead === null ? head : newHead;
 };
 
-
+/*
+Time: O(N)
+Space: O(1)
+*/
 
 
 // var reverseKGroup = function(head, k) {
