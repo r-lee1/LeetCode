@@ -12,6 +12,7 @@ const maxSubArray = (nums) => {
 };
 
 /*
+Kadane's Algorithm
 1. Initialize a currentSubarraySum and a maxSubarraySum to the first element
 2. Loop through nums, starting from element at index 1
    - Add nums[i] to currentSubarraySum

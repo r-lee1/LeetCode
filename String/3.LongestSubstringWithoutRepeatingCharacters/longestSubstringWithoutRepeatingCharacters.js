@@ -14,7 +14,7 @@ var lengthOfLongestSubstring = function(s) {
             maxLength = Math.max(maxLength, q-p+1);
             charCounter[char] = 1;
             q++;
-        } else if (charCounter[s[q]] === 0) {
+        } else if (charCounter[char] === 0) {
             maxLength = Math.max(maxLength, q-p+1);
             charCounter[char] += 1;
             q++;
