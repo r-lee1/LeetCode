@@ -2,24 +2,21 @@
  * @param {number[]} nums
  * @return {boolean}
  */
-var canJump = function(nums) {
-    if (nums.length === 1) return true;
-    let valid = false;
+ var canJump = function(nums) {
+     if (nums.length === 1) return true;
 
-    const makeJump = (idx) => {
-        if (idx === nums.length - 1) {
-            valid = true;
-            return;
-        }
-        for (let i = 1; i <= nums[idx]; i++) {
-            makeJump(idx+i);
-        }
-        return;
-    };
+     const makeJump = (idx) => {
+         if (idx === nums.length - 1) {
+             return true;
+         }
+         for (let i = nums[idx]; i >= 1; i--) {
+             if (makeJump(idx+i)) return true;
+         }
+         return false;
+     };
 
-    makeJump(0);
-    return valid;
-};
+     return makeJump(0);
+ };
 
 // This solution exceeds TLE
 // Time: O(N!) - The worst case is running N, N-1, N-2...1 recursive steps. At each jump, the number of possible jumps decrease by one
