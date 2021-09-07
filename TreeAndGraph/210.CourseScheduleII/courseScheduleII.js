@@ -6,9 +6,9 @@
 //
 
 const findOrder = (numCourses, prerequisites) => {
-    const graph = {};
-    const stack = [];
+    const graph = {}
     const visited = new Set();
+    const path = new Set();
 
     // Create adj list for graph
     for (let [a,b] of prerequisites) {
@@ -24,27 +24,27 @@ const findOrder = (numCourses, prerequisites) => {
     }
 
     function dfs(v) {
-        stack.push(v);
+        visited.add(v);
         let edges = graph[v];
 
         if (edges) {
             for (let e of edges) {
                 // class already taken, skip
-                if (visited.has(e)) continue;
+                if (path.has(e)) continue;
                 // cyclic exists, no valid path
-                if (stack.indexOf(e) !== -1) return true;
+                if (visited.has(e)) return true;
                 // exit traversal if a cycle is found
                 if (dfs(e)) return true;
             }
         }
 
-        stack.pop();
-        visited.add(v);
+        visited.delete(v);
+        path.add(v);
         return false;
     }
 
-    return [...visited].reverse();
-};
+    return [...path].reverse();
+}
 
 // Time: O(V+E) - iterate through all vertices and edges
 // Space: O(V+E) - E for edges in adj list, V for stack
