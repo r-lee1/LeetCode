@@ -5,57 +5,111 @@
  */
 //
 
+// Using Node Indegree
 const findOrder = (numCourses, prerequisites) => {
-    const graph = {}
-    const visited = new Set();
-    const path = new Set();
+    const adj = {};
+    const indegreeMap = new Array(numCourses).fill(0);
+    const queue = [];
+    const path = [];
 
-    // Create adj list for graph
     for (let [a,b] of prerequisites) {
-        if (graph[b] !== undefined) {
-            graph[b].push(a);
+        if (adj[b] !== undefined) {
+            adj[b].push(a);
         } else {
-            graph[b] = [a];
+            adj[b] = [a];
+        }
+
+        indegreeMap[a]++;
+    }
+
+    for (let i = 0; i < indegreeMap.length; i++) {
+        if (indegreeMap[i] === 0) {
+            queue.push(i);
         }
     }
 
-    for (let i = 0; i < numCourses; i++) {
-        if (dfs(i)) return [];
-    }
+    while (queue.length > 0) {
+        const curr = queue.shift();
+        path.push(curr);
 
-    function dfs(v) {
-        visited.add(v);
-        let edges = graph[v];
-
-        if (edges) {
-            for (let e of edges) {
-                // class already taken, skip
-                if (path.has(e)) continue;
-                // cyclic exists, no valid path
-                if (visited.has(e)) return true;
-                // exit traversal if a cycle is found
-                if (dfs(e)) return true;
+        const neighbors = adj[curr];
+        if (neighbors) {
+            for (let neighbor of neighbors) {
+                if (--indegreeMap[neighbor] === 0) {
+                    queue.push(neighbor);
+                }
             }
         }
-
-        visited.delete(v);
-        path.add(v);
-        return false;
     }
 
-    return [...path].reverse();
+    return path.length === numCourses ? path : [];
 }
 
-// Time: O(V+E) - iterate through all vertices and edges
-// Space: O(V+E) - E for edges in adj list, V for stack
-// Topological sorted order problem - Directed acyclic graph
-// 1. Create adj list for prereq
-// 2. Go through all the nodes
-// 3. Do dfs from a node that hasn't been visited before
-    // 4. Keep a stack for resolved nodes
-    // 5. Do dfs on all neighboring nodes that have not been visited
-    // 6. Once resolved, push current node to the stack
-// 4. Return resolved node stack in reverse order if length === numCourses or else a valid path doesn't exist return [].
+// Time: O(V+E) - Process each V in queue and iterate all edges in adj list
+// Space: O(V+E) - All vertices stored in queue, all edges stored in adj list
+// 1. Create adj list and map of indegree of vertices
+// 2. Create queue
+// 3. For vertices with in degree of 0, add it to the queue
+// 4. Process queue
+    // - Add vertex to the result
+    // - Reduce indegree of all neighbors
+    // - If a neighboring node indegree is 0, add it to the queue
+// 5. Return result
+
+//=======================================
+
+// //DFS
+// const findOrder = (numCourses, prerequisites) => {
+//     const graph = {};
+//     const visited = new Set();
+//     const path = new Set();
+//
+//     // Create adj list for graph
+//     for (let [a,b] of prerequisites) {
+//         if (graph[b] !== undefined) {
+//             graph[b].push(a);
+//         } else {
+//             graph[b] = [a];
+//         }
+//     }
+//
+//     for (let i = 0; i < numCourses; i++) {
+//         if (dfs(i)) return [];
+//     }
+//
+//     function dfs(v) {
+//         visited.add(v);
+//         let edges = graph[v];
+//
+//         if (edges) {
+//             for (let e of edges) {
+//                 // class already taken, skip
+//                 if (path.has(e)) continue;
+//                 // cyclic exists, no valid path
+//                 if (visited.has(e)) return true;
+//                 // exit traversal if a cycle is found
+//                 if (dfs(e)) return true;
+//             }
+//         }
+//
+//         visited.delete(v);
+//         path.add(v);
+//         return false;
+//     }
+//
+//     return [...path].reverse();
+// };
+//
+// // Time: O(V+E) - iterate through all vertices and edges
+// // Space: O(V+E) - E for edges in adj list, V for stack
+// // Topological sorted order problem - Directed acyclic graph
+// // 1. Create adj list for prereq
+// // 2. Go through all the nodes
+// // 3. Do dfs from a node that hasn't been visited before
+//     // 4. Keep a stack for resolved nodes
+//     // 5. Do dfs on all neighboring nodes that have not been visited
+//     // 6. Once resolved, push current node to the stack
+// // 4. Return resolved node stack in reverse order if length === numCourses or else a valid path doesn't exist return [].
 
 //==================================
 
